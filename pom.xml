@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ru.hogwarts</groupId>
-	<artifactId>scool</artifactId>
+	<artifactId>school</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>school</name>
 	<description>Demo project for Spring Boot</description>
@@ -27,11 +27,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.0.0</version>
-		</dependency>
+
 	</dependencies>
 
 
