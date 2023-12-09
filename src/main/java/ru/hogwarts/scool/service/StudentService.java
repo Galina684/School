@@ -3,10 +3,7 @@ package ru.hogwarts.scool.service;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.scool.model.Student;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class StudentService {
@@ -19,7 +16,7 @@ public class StudentService {
         return student;
     }
 
-    public Student readStudent(Long id) {
+    public Student readStudent(long id) {
         return students.get(id);
     }
 
@@ -35,7 +32,7 @@ public class StudentService {
         return students.remove(id);
     }
 
-    public List<Student> filterAge(int age) {
+    public Collection<Student> filterAge(int age) {
         List<Student> studentList = new ArrayList<>();
         for (Student student : students.values()) {
             if (student.getAge() == age) {
