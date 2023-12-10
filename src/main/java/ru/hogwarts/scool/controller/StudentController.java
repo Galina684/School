@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.scool.model.Student;
 import ru.hogwarts.scool.service.StudentService;
+
 import java.util.Collection;
 import java.util.Collections;
 
@@ -48,7 +49,7 @@ public class StudentController {
         return studentService.deleteStudent(id);
     }
 
-    @GetMapping("{age}")
+    @GetMapping("/filter {age}")
     public ResponseEntity<Collection<Student>> filterStudentAge(@RequestParam(required = false) int age) {
         if (age > 0) {
             return ResponseEntity.ok(studentService.filterAge(age));
