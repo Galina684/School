@@ -46,8 +46,8 @@ public class FacultyController {
         return facultyService.deleteFaculty(id);
     }
 
-    @GetMapping("/filter {color}")
-    public ResponseEntity<Collection<Faculty>> filterColorFaculty(@RequestParam(required = false) String color) {
+    @GetMapping(params = " {color}")
+    public ResponseEntity<Collection<Faculty>> filterColorFaculty(String color) {
         if (color != null && !color.isBlank()) {
             return ResponseEntity.ok((Collection<Faculty>) facultyService.filterGolor(color));
         }

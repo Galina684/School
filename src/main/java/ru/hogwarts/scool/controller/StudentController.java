@@ -49,8 +49,8 @@ public class StudentController {
         return studentService.deleteStudent(id);
     }
 
-    @GetMapping("/filter {age}")
-    public ResponseEntity<Collection<Student>> filterStudentAge(@RequestParam(required = false) int age) {
+    @GetMapping(params = {"age"})
+    public ResponseEntity<Collection<Student>> filterStudentAge( Integer age) {
         if (age > 0) {
             return ResponseEntity.ok(studentService.filterAge(age));
         }
