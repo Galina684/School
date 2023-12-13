@@ -4,11 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.hogwarts.scool.model.Faculty;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.StatusResultMatchersExtensionsKt.isEqualTo;
 
 class FacultyServiceTest {
@@ -20,7 +16,7 @@ class FacultyServiceTest {
 
     @BeforeEach
     void setUp() {
-        out = new FacultyService();
+
         out.createFaculty(griffindor);
         out.createFaculty(hufflepuff);
     }
