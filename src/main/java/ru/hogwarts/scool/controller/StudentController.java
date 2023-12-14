@@ -50,10 +50,18 @@ public class StudentController {
          return ResponseEntity.ok().build();
     }
 
-    @GetMapping(params = {"age"})
-    public ResponseEntity<Collection<Student>> filterStudentAge( Integer age) {
+    @GetMapping(params = "{age}")
+    public ResponseEntity<Collection<Student>> filterStudentAge(Integer age) {
         if (age > 0) {
             return ResponseEntity.ok(studentService.filterAge(age));
+        }
+        return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping()
+    public ResponseEntity<Collection<Student>> filterStudentAgeBetween(@RequestParam Integer ageMin, @RequestParam Integer ageMax) {
+        if (ageMin > 0) {
+            return ResponseEntity.ok(studentService.findByAgeBetween(ageMin, ageMax));
         }
         return ResponseEntity.ok(Collections.emptyList());
     }
