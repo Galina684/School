@@ -48,16 +48,15 @@ public class AvatarService {
             avatar.setFileSize(file.getSize());
             avatar.setMediaType(file.getContentType());
 
-
         }
 
     }
 
-    private Avatar findAvatar(long student_Id) {
-        return avatarRepository.findById(student_Id).orElse(new Avatar());
+    public Avatar findAvatar(long student_Id) {
+        return avatarRepository.findByAvatar(student_Id).orElse(new Avatar());
     }
 
-    private String getExtension(String fileName) {
+    public String getExtension(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 }
