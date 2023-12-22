@@ -48,33 +48,44 @@ public class AvatarService {
             avatar.setFilePath(filePath.toString());
             avatar.setFileSize(file.getSize());
             avatar.setMediaType(file.getContentType());
-            avatar.setData(file.getBytes());
+            avatar.setData(generateDataForDB(filePath));
 
             avatarRepository.save(avatar);
 
         }
     }
 
-    public Avatar findAvatar(long student_Id) {
-        return avatarRepository.findByAvatar(student_Id).orElseGet(Avatar::new);
+    public Avatar findAvatar(long studentId) {
+        return avatarRepository.findByStudentId(studentId).orElseGet(Avatar::new);
     }
 
     public String getExtension(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
-//    private byte[] generateDataForDB(Path filePath) throws IOException {
-//        try (
-//                InputStream is = Files.newInputStream(filePath);
-//                BufferedInputStream bis = new BufferedInputStream(is, 1024);
-//                ByteArrayOutputStream baos = new ByteArrayOutputStream() {
-//                    BufferedImage image = ImageIO.read(bis);
-//                    int height = image.getHeight() / (image.getWidth() / 100);
-//                    BufferedImage preview = new BufferedImage(100, height, image.getType());
-//                    Graphics2D graphics = preview.createGraphics();
-//                    graphics.drawImage();
-//                    graphics.dispose();
-//                }
-//        )
-//    }
+    private byte[] generateDataForDB(Path filePath) throws IOException {
+        try (InputStream is = Files.newInputStream(filePath);
+             BufferedInputStream bis = new BufferedInputStream(is, 1024);
+             ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+
+            BufferedImage image = ImageIO.read(bis);
+            int height = image.getHeight() / (image.getWidth() / 100);
+            BufferedImage preview = new BufferedImage(100, height, image.getType());
+            Graphics2D graphics = preview.createGraphics();
+            graphics.drawImage(
+                    image,
+                    0,
+                    0,
+                    100,
+                    height,
+                    null
+            );
+            graphics.dispose();
+
+            ImageIO.write(preview, "jpg", baos);
+            return baos.toByteArray();
+        }
+    }
+
+
 }
