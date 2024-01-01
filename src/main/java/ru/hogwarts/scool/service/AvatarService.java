@@ -30,10 +30,10 @@ public class AvatarService {
         this.avatarRepository = avatarRepository;
     }
 
-    public void uploaderAvatar(long student_id, MultipartFile file) throws IOException {
-        Student student = studentService.readStudent(student_id);
+    public void uploaderAvatar(long studentId, MultipartFile file) throws IOException {
+        Student student = studentService.readStudent(studentId);
 
-        Path filePath = Path.of(avatarsDir, student_id + "." + getExtension(file.getOriginalFilename()));
+        Path filePath = Path.of(avatarsDir, studentId + "." + getExtension(file.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
 
@@ -43,7 +43,7 @@ public class AvatarService {
              BufferedOutputStream bos = new BufferedOutputStream(os, 1024);
         ) {
             bis.transferTo(bos);
-            Avatar avatar = findAvatar(student_id);
+            Avatar avatar = findAvatar(studentId);
             avatar.setStudent(student);
             avatar.setFilePath(filePath.toString());
             avatar.setFileSize(file.getSize());

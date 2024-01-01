@@ -2,43 +2,38 @@ package ru.hogwarts.scool.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.hogwarts.scool.model.Faculty;
+import ru.hogwarts.scool.repository.FacultyRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.StatusResultMatchersExtensionsKt.isEqualTo;
 
 class FacultyServiceTest {
+
     FacultyService out;
-    private final Faculty griffindor = new Faculty(1L, "Griffindor", "red");
-    private final Faculty hufflepuff = new Faculty(2L, "Hufflepuff", "yellow");
-//    private final Faculty ravenclaw = new Faculty(3L, "Ravenclaw", "blue");
-//    private final Faculty slytherin = new Faculty(4L, "Slytherin", "green");
+
+    FacultyRepository facultyRepository;
 
     @BeforeEach
     void setUp() {
-
-        out.createFaculty(griffindor);
-        out.createFaculty(hufflepuff);
+        FacultyService out = new FacultyService(facultyRepository);
     }
 
     @Test
     void createFaculty() {
-Faculty expected = new Faculty(3L, "Ravenclaw", "blue");
+      Faculty expected = new Faculty(3L, "Ravenclaw", "blue");
+      facultyRepository.save(expected);
 
-        assertThat(out.createFaculty(new Faculty(3L,"Ravenclaw","blue" )))
-        .isEqualTo(expected);
+      assertEquals(expected, out.createFaculty(new Faculty(3L,"Ravenclaw","blue" )));
 
     }
 
     @Test
     void readFaculty() {
-        Faculty expected = new Faculty(3L, "Ravenclaw", "blue");
-  //      long counter = 0;
-//        expected.setId(counter++);
-//        assertThat(out.readFaculty(3L))
-//               .isEqualTo(expected);
 
-       // assertEquals(out.readFaculty(3L),3L);
     }
 
     @Test
