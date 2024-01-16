@@ -4,8 +4,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.scool.model.Student;
 import ru.hogwarts.scool.service.StudentService;
+
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 
 @RestController
@@ -64,5 +66,18 @@ public class StudentController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
+    @GetMapping("/average-age")
+    public Double findByAverageAge() {
+        return studentService.findByAverageAge();
+    }
 
+    @GetMapping("/find-all")
+    public Integer findAllStudents() {
+        return studentService.findAllStudents();
+    }
+
+    @GetMapping("/last-student")
+    public Collection<Student> findByLastStudents() {
+        return studentService.findByLastStudents();
+    }
 }

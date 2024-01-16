@@ -3,6 +3,7 @@ package ru.hogwarts.scool.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -60,6 +61,11 @@ public class AvatarController {
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
         }
+    }
+
+    @GetMapping(value = "/all")
+    public Page<Avatar> getAllAvatars(@RequestParam("page") int page, @RequestParam("size") int size) {
+        return avatarService.getAllAvatars(page, size);
     }
 
 }

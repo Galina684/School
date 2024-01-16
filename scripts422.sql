@@ -15,7 +15,7 @@ price decimal (10,2)
 create table ownership (
 ownership_id int primary key,
 person_id int,
-car_id,
+car_id int,
 foreign key (person_id) references persons (person_id),
 foreign key (car_id) references cars (car_id)
 );
