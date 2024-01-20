@@ -6,10 +6,15 @@ import ru.hogwarts.scool.repository.StudentRepository;
 
 import java.util.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
+
+    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
 
     public StudentService(StudentRepository studentRepository) {
@@ -18,40 +23,48 @@ public class StudentService {
     }
 
     public Student createStudent(Student student) {
+        logger.info("Был вызван метод createStudent");
         return studentRepository.save(student);
 
     }
 
     public Student readStudent(long id) {
+        logger.info("Был вызван метод readStudent");
         return studentRepository.findById(id).get();
     }
 
     public Student updateStudent(Student student) {
+        logger.info("Был вызван метод updateStudent");
         return studentRepository.save(student);
     }
 
     public void deleteStudent(long id) {
+        logger.info("Был вызван метод deleteStudent");
         studentRepository.deleteById(id);
     }
 
     public Collection<Student> filterAge(int age) {
-
+        logger.info("Был вызван метод filterAge");
         return studentRepository.findByAge(age);
     }
 
     public Collection<Student> findByAgeBetween(int min, int max) {
+        logger.info("Был вызван метод findByAgeBetween");
         return studentRepository.findByAgeBetween(min, max);
     }
 
     public Double findByAverageAge() {
+        logger.info("Был вызван метод findByAverageAge");
         return studentRepository.findByAverageAge();
     }
 
     public Integer findAllStudents() {
+        logger.info("Был вызван метод findAllStudents");
         return studentRepository.findAllStudents();
     }
 
     public Collection<Student> findByLastStudents() {
+        logger.info("Был вызван метод findByLastStudents");
         return studentRepository.findByLastStudents();
     }
 }

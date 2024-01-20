@@ -1,6 +1,8 @@
 package ru.hogwarts.scool.service;
 
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,12 +30,15 @@ public class AvatarService {
     private final StudentService studentService;
     private final AvatarRepository avatarRepository;
 
+    private final Logger logger = LoggerFactory.getLogger(AvatarService.class);
+
     public AvatarService(StudentService studentService, AvatarRepository avatarRepository) {
         this.studentService = studentService;
         this.avatarRepository = avatarRepository;
     }
 
     public void uploaderAvatar(long studentId, MultipartFile file) throws IOException {
+        logger.info("Был вызван метод uploaderAvatar");
         Student student = studentService.readStudent(studentId);
 
         Path filePath = Path.of(avatarsDir, studentId + "." + getExtension(file.getOriginalFilename()));
@@ -59,14 +64,17 @@ public class AvatarService {
     }
 
     public Avatar findAvatar(long studentId) {
+        logger.info("Был вызван метод findAvatar");
         return avatarRepository.findByStudentId(studentId).orElseGet(Avatar::new);
     }
 
     public String getExtension(String fileName) {
+        logger.info("Был вызван метод getExtension");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     private byte[] generateDataForDB(Path filePath) throws IOException {
+        logger.info("Был вызван метод generateDataForDB");
         try (InputStream is = Files.newInputStream(filePath);
              BufferedInputStream bis = new BufferedInputStream(is, 1024);
              ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -91,6 +99,7 @@ public class AvatarService {
     }
 
     public Page<Avatar> getAllAvatars(Integer pageNumber, Integer pageSize) {
+        logger.info("Был вызван метод getAllAvatars");
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         return avatarRepository.findAll(pageable);
 
