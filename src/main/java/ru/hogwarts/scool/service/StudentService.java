@@ -5,6 +5,7 @@ import ru.hogwarts.scool.model.Student;
 import ru.hogwarts.scool.repository.StudentRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +59,14 @@ public class StudentService {
         return studentRepository.findByAverageAge();
     }
 
+    public Double streamAverageAge() {
+        logger.info("Был вызван метод streamAverageAge");
+        return studentRepository.findAll().stream()
+                .mapToDouble(i -> (double) i.getAge())
+                .average()
+                .orElseThrow(() -> new RuntimeException("Ошибка вычисления среднего возраста"));
+    }
+
     public Integer findAllStudents() {
         logger.info("Был вызван метод findAllStudents");
         return studentRepository.findAllStudents();
@@ -66,6 +75,16 @@ public class StudentService {
     public Collection<Student> findByLastStudents() {
         logger.info("Был вызван метод findByLastStudents");
         return studentRepository.findByLastStudents();
+    }
+
+    public Collection<String> startLetterName() {
+        logger.info("Был вызван метод startLetterName");
+        return studentRepository.findAll().parallelStream()
+                .map(Student::getName)
+                .filter(name -> name.startsWith("A"))
+                .sorted()
+                .collect(Collectors.toList());
+
     }
 }
 

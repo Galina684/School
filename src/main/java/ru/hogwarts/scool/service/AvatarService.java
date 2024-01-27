@@ -104,4 +104,5 @@ public class AvatarService {
         return avatarRepository.findAll(pageable);
 
     }
+
 }

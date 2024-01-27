@@ -71,6 +71,11 @@ public class StudentController {
         return studentService.findByAverageAge();
     }
 
+    @GetMapping("/stream-average-age")
+    public Double streamAverageAge() {
+        return studentService.streamAverageAge();
+    }
+
     @GetMapping("/find-all")
     public Integer findAllStudents() {
         return studentService.findAllStudents();
@@ -79,5 +84,10 @@ public class StudentController {
     @GetMapping("/last-student")
     public Collection<Student> findByLastStudents() {
         return studentService.findByLastStudents();
+    }
+
+    @GetMapping("/name-stsrt-A")
+    public Collection<String> startLetterName() {
+        return studentService.startLetterName();
     }
 }

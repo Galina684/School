@@ -48,12 +48,17 @@ public class FacultyController {
     }
 
     @GetMapping()
-    public ResponseEntity<Collection<Faculty>> filterFacultyByColorOrName(@RequestParam( required = false) String color, @RequestParam( required = false) String name) {
+    public ResponseEntity<Collection<Faculty>> filterFacultyByColorOrName(@RequestParam(required = false) String color, @RequestParam(required = false) String name) {
         if (color != null && !color.isBlank() || name != null && !name.isBlank()) {
             return ResponseEntity.ok((Collection<Faculty>) facultyService.findByColorOrNameIgnoreCase(color, name));
         }
 
         return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("/longest-Name")
+    public String facultyLongestName() {
+        return facultyService.facultyLongestName();
     }
 
 }
