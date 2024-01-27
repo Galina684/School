@@ -86,5 +86,57 @@ public class StudentService {
                 .collect(Collectors.toList());
 
     }
+
+    public void studentsPrintParallel() {
+        logger.info("Был вызван метод studentsPrintParallel");
+        long start = System.currentTimeMillis();
+        List<Student> students = studentRepository.findAll();
+        logger.info("главный поток метод studentsPrint");
+        print(students.get(0));
+        print(students.get(1));
+        logger.info("второй поток метод studentsPrint");
+        new Thread(() -> {
+            print(students.get(2));
+            print(students.get(3));
+        }).start();
+        logger.info("третий поток метод studentsPrint");
+        new Thread(() -> {
+            print(students.get(4));
+            print(students.get(5));
+        }).start();
+        long finish = System.currentTimeMillis();
+        logger.info("Время вычисления: " + (finish - start));
+
+    }
+
+    private void print(Student student) {
+        System.out.println(Thread.currentThread() + " " + student);
+    }
+
+    public void studentsPrintSynchronized() {
+        logger.info("Был вызван метод studentsPrintSynchronized");
+        long start = System.currentTimeMillis();
+        List<Student> students = studentRepository.findAll();
+        logger.info("главный поток метод studentsPrintSynchronized");
+        printSynchronized(students.get(0));
+        printSynchronized(students.get(1));
+        logger.info("второй поток метод studentsPrintSynchronized");
+        new Thread(() -> {
+            printSynchronized(students.get(2));
+            printSynchronized(students.get(3));
+        }).start();
+        logger.info("третий поток метод studentsPrintSynchronized");
+        new Thread(() -> {
+            printSynchronized(students.get(4));
+            printSynchronized(students.get(5));
+        }).start();
+        long finish = System.currentTimeMillis();
+        logger.info("Время вычисления: " + (finish - start));
+    }
+
+    private synchronized void printSynchronized(Student student) {
+        System.out.println(Thread.currentThread() + " " + student);
+    }
+
 }
 

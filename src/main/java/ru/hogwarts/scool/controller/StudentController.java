@@ -7,7 +7,6 @@ import ru.hogwarts.scool.service.StudentService;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 
 @RestController
@@ -86,8 +85,18 @@ public class StudentController {
         return studentService.findByLastStudents();
     }
 
-    @GetMapping("/name-stsrt-A")
+    @GetMapping("/name-start-A")
     public Collection<String> startLetterName() {
         return studentService.startLetterName();
+    }
+
+    @GetMapping("/print-parallel")
+    public void printNames() {
+        studentService.studentsPrintParallel();
+    }
+
+    @GetMapping("/print-synchronized")
+    public void printNamesSynchronized() {
+        studentService.studentsPrintSynchronized();
     }
 }
