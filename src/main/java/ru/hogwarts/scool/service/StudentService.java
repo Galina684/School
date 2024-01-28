@@ -122,15 +122,14 @@ public class StudentService {
         logger.info("главный поток метод studentsPrintSynchronized");
         printSynchronized(students.poll());
         printSynchronized(students.poll());
-        logger.info("второй поток метод studentsPrintSynchronized");
+        logger.info("второй поток будет запущен через 1 сек");
         new Thread(() -> {
-            printSynchronized(students.poll());
-            logger.info("пауза 1 сек");
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            printSynchronized(students.poll());
             printSynchronized(students.poll());
         }).start();
         new Thread(() -> {
