@@ -116,19 +116,31 @@ public class StudentService {
     public void studentsPrintSynchronized() {
         logger.info("Был вызван метод studentsPrintSynchronized");
         long start = System.currentTimeMillis();
-        List<Student> students = studentRepository.findAll();
+        Queue<Student> students = new LinkedList<>(studentRepository.findAll().stream()
+                .sorted(Comparator.comparing(Student::getId))
+                .toList());
         logger.info("главный поток метод studentsPrintSynchronized");
-        printSynchronized(students.get(0));
-        printSynchronized(students.get(1));
+        printSynchronized(students.poll());
+        printSynchronized(students.poll());
         logger.info("второй поток метод studentsPrintSynchronized");
         new Thread(() -> {
-            printSynchronized(students.get(2));
-            printSynchronized(students.get(3));
+            printSynchronized(students.poll());
+            logger.info("пауза 1 сек");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            printSynchronized(students.poll());
+        }).start();
+        new Thread(() -> {
+            printSynchronized(students.poll());
+            printSynchronized(students.poll());
         }).start();
         logger.info("третий поток метод studentsPrintSynchronized");
         new Thread(() -> {
-            printSynchronized(students.get(4));
-            printSynchronized(students.get(5));
+            printSynchronized(students.poll());
+            printSynchronized(students.poll());
         }).start();
         long finish = System.currentTimeMillis();
         logger.info("Время вычисления: " + (finish - start));
